@@ -84,8 +84,11 @@
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="FrameCounter.h" />
     <ClInclude Include="Human.h" />
+    <ClInclude Include="HumanOwnedStates.h" />
     <ClInclude Include="MessageDispatcher.h" />
+    <ClInclude Include="MessageTypes.h" />
     <ClInclude Include="Orc.h" />
+    <ClInclude Include="OrcOwnedStates.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
@@ -98,8 +101,10 @@
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="FrameCounter.cpp" />
     <ClCompile Include="Human.cpp" />
+    <ClCompile Include="HumanOwnedStates.cpp" />
     <ClCompile Include="MessageDispatcher.cpp" />
     <ClCompile Include="Orc.cpp" />
+    <ClCompile Include="OrcOwnedStates.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

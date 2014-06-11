@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include <assert.h>
 
 template <class T>
 class StateMachine 
@@ -9,7 +10,7 @@ public:
 		:m_pOwner(owner), m_pCurrentState(NULL), m_pPreviousState(NULL), m_pGlobalState(NULL)
 	{};
 	
-	~StateMachine(void);
+	~StateMachine(void) {};
 
 	void SetCurrentState(State<T>* state)
 	{
@@ -35,7 +36,7 @@ public:
 
 		if(m_pCurrentState)
 		{
-			m_pCurrentState->Execute(m_pCurrentState);
+			m_pCurrentState->Execute(m_pOwner);
 		}
 	}
 
@@ -48,6 +49,25 @@ public:
 		m_pCurrentState = pNewState;
 		m_pCurrentState->Enter(m_pOwner);
 	}
+
+	bool  HandleMessage(const Telegram& msg)const
+  {
+    //first see if the current state is valid and that it can handle
+    //the message
+    if (m_pCurrentState && m_pCurrentState->OnMessage(m_pOwner, msg))
+    {
+      return true;
+    }
+  
+    //if not, and if a global state has been implemented, send 
+    //the message to the global state
+    if (m_pGlobalState && m_pGlobalState->OnMessage(m_pOwner, msg))
+    {
+      return true;
+    }
+
+    return false;
+  }
 
 	void RevertToPreviousState()
 	{
@@ -69,12 +89,7 @@ public:
 		return m_pPreviousState;
 	}
 
-	void  RevertToPreviousState()
-	{
-		ChangeState(m_pPreviousState);
-	}
-
-	bool  isInState(const State<entity_type>& st)const
+	bool  isInState(const State<T>& st)const
 	{
 		return typeid(*m_pCurrentState) == typeid(st);
 	}
