@@ -69,7 +69,16 @@ public:
 		return m_pPreviousState;
 	}
 
-	bool IsInState(const State<T>& state) const=
+	void  RevertToPreviousState()
+	{
+		ChangeState(m_pPreviousState);
+	}
+
+	bool  isInState(const State<entity_type>& st)const
+	{
+		return typeid(*m_pCurrentState) == typeid(st);
+	}
+
 private:
 	T* m_pOwner;
 	State<T>* m_pCurrentState;
